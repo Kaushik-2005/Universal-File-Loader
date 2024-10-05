@@ -1,0 +1,12 @@
+python-dotenv
+streamlit
+gradio
+langchain
+langchain-community
+google-generativeai
+langchain-google-genai
+pypdf
+beautifulsoup4
+unstructured
+nltk
+langchain-groq
