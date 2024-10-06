@@ -5,7 +5,7 @@ langchain
 langchain-community
 google-generativeai
 langchain-google-genai
-pypdf
+pypdf2
 beautifulsoup4
 unstructured
 nltk
