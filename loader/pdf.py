@@ -10,7 +10,7 @@ class PDFLoader(DocProcessor):
         """Extracts text from the provided PDF file."""
         loader = PyPDFLoader(self.pdf_file)
         pages = []
-        for page in loader.alazy_load():
+        for page in loader.load():
             pages.append(page)
         content = "".join([page.page_content for page in pages])
         return content

@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 from loader.pdf import PDFLoader
 import os
 
+from main import handle_chat, update_knowledge_base
+
 app = Flask(__name__)
 
 
