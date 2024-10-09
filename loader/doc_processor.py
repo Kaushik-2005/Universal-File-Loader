@@ -1,11 +1,9 @@
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, GoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
-
 from dotenv import load_dotenv
 import google.generativeai as genai
 
@@ -37,9 +35,8 @@ class DocProcessor:
         Context:\n{context}\n
         Question:\n{question}\n
         Answer:
-        ### NO PREAMBLE
         """
-        model = ChatGoogleGenerativeAI(model="gemini-pro", temparature=0.1)
+        model = GoogleGenerativeAI(model="gemini-pro", temperature=0.3)  # Use Google Generative AI
         prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
         chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
         return chain
@@ -49,6 +46,9 @@ class DocProcessor:
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         vector_store = FAISS.load_local("faiss_index", embeddings)
         docs = vector_store.similarity_search(user_question)
+
+        if not docs:
+            return "No relevant documents found in the knowledge base."
 
         chain = self.get_conversational_chain()
         response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)

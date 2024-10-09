@@ -11,3 +11,4 @@ beautifulsoup4
 unstructured
 nltk
 langchain-groq
+faiss-cpu

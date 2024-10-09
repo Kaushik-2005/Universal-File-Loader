@@ -1,14 +1,15 @@
 import os
-from langchain_groq import ChatGroq
+from langchain_google_genai import GoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
+from loader.pdf import PDFLoader
 
 load_dotenv()
 
 class Chain:
     def __init__(self):
         # Initialize the LLM with the given model
-        self.llm = ChatGroq(temperature=0, groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama-3.1-70b-versatile")
+        self.llm = GoogleGenerativeAI(model="gemini-pro", temperature=0.3)  # Use Google Generative AI
         self.knowledge_base = ""  # Initialize an empty knowledge base
 
     def set_knowledge_base(self, content):
@@ -41,12 +42,33 @@ class Chain:
 # Initialize the Chain object
 chain_instance = Chain()
 
-def handle_chat(message):
-    # Function to process a chat message (question)
-    response = chain_instance.handle_query(message)
-    return response
+def handle_query(question):
+    return chain_instance.handle_query(question)
 
 def update_knowledge_base(text):
     # Function to update the knowledge base with new text content
     chain_instance.set_knowledge_base(text)
     return "Knowledge base updated successfully"
+
+# Test the Q&A functionality in the terminal
+if __name__ == "__main__":
+    pdf_file_path = input("Enter the path to the PDF file: ")
+
+    if os.path.exists(pdf_file_path):
+        # Create an instance of PDFLoader and extract text
+        pdf_loader = PDFLoader(pdf_file_path)
+        extracted_text = pdf_loader.extract_text()
+
+        # Update the knowledge base with the extracted text
+        update_knowledge_base(extracted_text)
+
+        print("Knowledge base updated successfully. You can now ask questions.")
+
+        while True:
+            question = input("Enter your question (or 'exit' to quit): ")
+            if question.lower() == 'exit':
+                break
+            response = handle_query(question)
+            print("Response from LLM:", response)
+    else:
+        print("The specified file does not exist.")

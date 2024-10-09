@@ -1,25 +1,21 @@
 from flask import Flask, render_template, request, jsonify
 from loader.pdf import PDFLoader
 import os
-
-from main import handle_chat, update_knowledge_base
+from main import handle_query, update_knowledge_base
 
 app = Flask(__name__)
-
 
 # Route for the home page
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
 # Route for handling normal chatbot conversations
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json.get('message')
-    response = handle_chat(user_input)  # Function from main.py
+    response = handle_query(user_input)  # Function from main.py
     return jsonify({'response': response})
-
 
 # Route for handling file uploads
 @app.route('/upload', methods=['POST'])
@@ -37,13 +33,8 @@ def upload_file():
 
         # Initialize PDFLoader with the file path
         processor = PDFLoader(file_path)
-        text = processor.extract_text()  # Make this synchronous for simplicity
         processor.process()  # Process the file and get vectors for the knowledge base
-        response = update_knowledge_base(text)  # Update the knowledge base
         return jsonify({'response': 'File processed successfully'})
-    # Uncomment below when CSVLoader is available
-    # elif file_type == 'csv':
-    #     processor = CSVLoader()
 
     return jsonify({'error': 'Unsupported file type'}), 400
 

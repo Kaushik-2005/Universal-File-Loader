@@ -1,5 +1,9 @@
-from loader.doc_processor import DocProcessor
+try:
+    from loader.doc_processor import DocProcessor
+except ImportError:
+    from doc_processor import DocProcessor
 from langchain_community.document_loaders import PyPDFLoader
+import os
 
 class PDFLoader(DocProcessor):
     def __init__(self, pdf_file):
@@ -15,8 +19,8 @@ class PDFLoader(DocProcessor):
         content = "".join([page.page_content for page in pages])
         return content
 
-    async def process(self):
+    def process(self):
         """Extracts text, chunks it, and stores vectors in the FAISS index."""
-        text = await self.extract_text()  # Ensure you await the asynchronous function
+        text = self.extract_text()
         text_chunks = self.get_text_chunks(text)
         self.get_vector_store(text_chunks)
