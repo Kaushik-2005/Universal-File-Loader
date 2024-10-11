@@ -36,7 +36,7 @@ class PDFLoader:
 
     def get_conversational_chain(self):
         prompt_template = """
-               Answer the question as detailed as possible from the provided context. Make sure to provide all the details.
+                Answer the question as detailed as possible from the provided context. Make sure to provide all the details.
                If the answer is not in the provided context, just say, "The answer is not available in the context." Don't provide a wrong answer.\n\n
                Context:\n{context}\n
                Question:\n{question}\n

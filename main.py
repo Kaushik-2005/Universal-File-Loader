@@ -34,17 +34,17 @@ def update_knowledge_base(pdf_file_path):
     chain_instance.update_knowledge_base(pdf_file_path)
     return "Knowledge base updated successfully. You can now ask questions."
 
-if __name__ == "__main__":
-    pdf_file_path = input("Enter the path to the PDF file: ")
-    if os.path.exists(pdf_file_path):
-        update_knowledge_base(pdf_file_path)
-        print("Knowledge base updated successfully. You can now ask questioins.")
-
-        while True:
-            question = input("Enter your question (or 'exit' to quit): ")
-            if question.lower() == "exit":
-                break
-            response = handle_query(question)
-            print("Response from LLM: ", response)
-    else:
-        print("The specified file does not exist")
+# if __name__ == "__main__":
+#     pdf_file_path = input("Enter the path to the PDF file: ")
+#     if os.path.exists(pdf_file_path):
+#         update_knowledge_base(pdf_file_path)
+#         print("Knowledge base updated successfully. You can now ask questioins.")
+#
+#         while True:
+#             question = input("Enter your question (or 'exit' to quit): ")
+#             if question.lower() == "exit":
+#                 break
+#             response = handle_query(question)
+#             print("Response from LLM: ", response)
+#     else:
+#         print("The specified file does not exist")
