@@ -3,32 +3,46 @@ import os
 from main import handle_query, update_knowledge_base
 
 app = Flask(__name__)
+current_file_type = None  # Store the file type globally to be used later
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/chat', methods = ['POST'])
+@app.route('/chat', methods=['POST'])
 def chat():
+    global current_file_type
+    if not current_file_type:
+        return jsonify({'response': "No file uploaded. Please upload a file first."})
+
     user_input = request.json.get('message')
-    response = handle_query(user_input)
+    response = handle_query(user_input, current_file_type)  # Pass the file type to handle_query
     return jsonify({'response': response})
 
-@app.route('/upload', methods = ['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
+    global current_file_type
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400
 
     file = request.files['file']
-    file_type = file.filename.split('.')[-1]
+    file_type = file.filename.split('.')[-1].lower()
 
-    if file_type == 'pdf':
-        file_path = os.path.join("uploads", file.filename)
-        file.save(file_path)
+    if file_type not in ['csv', 'pdf']:
+        return jsonify({'error': 'Unsupported file type'}), 400
 
-        update_knowledge_base(file_path)
-        return jsonify({'response': 'File processed and knowledge base updated successfully'})
-    return jsonify({'error': 'Unsupported file type'}), 400
+    file_path = os.path.join("uploads", file.filename)
+    os.makedirs("uploads", exist_ok=True)
+    file.save(file_path)
+
+    # Set the current file type based on uploaded file
+    current_file_type = file_type
+
+    # Update the knowledge base accordingly
+    update_knowledge_base(file_path, file_type)
+
+    return jsonify({'response': f'{file_type.upper()} file processed and knowledge base updated successfully.'})
 
 if __name__ == '__main__':
     app.run(debug=True)
