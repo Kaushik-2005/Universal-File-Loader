@@ -12,3 +12,5 @@ unstructured
 nltk
 langchain-groq
 faiss-cpu
+pandas
+openpyxl
