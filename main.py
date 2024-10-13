@@ -10,7 +10,6 @@ class Chain:
         self.pdf_loader = None
         self.csv_loader = None
         self.vector_store = None
-        self.csv_data = None
 
     def update_knowledge_base_pdf(self, pdf_file_path):
         self.pdf_loader = MyPDFLoader(pdf_file_path)
@@ -21,15 +20,14 @@ class Chain:
 
     def update_knowledge_base_csv(self, csv_file_path):
         self.csv_loader = MyCSVLoader(csv_file_path)
-        csv_text, csv_data = self.csv_loader.extract_entries()
-        self.csv_data = csv_data  # Store the CSV data for later queries
+        self.csv_loader.extract_data()
         print("CSV data loaded successfully, ready to answer queries")
 
     def handle_query(self, question, file_type):
         # For CSV files, directly query the loaded CSV data
         if file_type == 'csv':
-            if self.csv_data:
-                response = self.csv_loader.handle_user_input(question, csv_data=self.csv_data)
+            if self.csv_loader:
+                response = self.csv_loader.handle_user_input(question)
                 return response
             else:
                 return "No CSV data loaded. Please upload a CSV file."
@@ -61,19 +59,3 @@ def update_knowledge_base(file_path, file_type):
     elif file_type == 'csv':
         chain_instance.update_knowledge_base_csv(file_path)
     return "Knowledge base updated successfully. You can now ask questions."
-
-# if __name__ == "__main__":
-#     file_path = input("Enter the path to the file (PDF or CSV): ")
-#     file_type = input("Enter the file type (pdf or csv): ")
-#     if os.path.exists(file_path):
-#         update_knowledge_base(file_path, file_type)
-#         print("Knowledge base updated successfully. You can now ask questions.")
-#
-#         while True:
-#             question = input("Enter your question (or 'exit' to quit): ")
-#             if question.lower() == "exit":
-#                 break
-#             response = handle_query(question)
-#             print("Response from LLM: ", response)
-#     else:
-#         print("The specified file does not exist")

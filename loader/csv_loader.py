@@ -54,13 +54,13 @@ class MyCSVLoader:
         })
         return response
 
-file_path = input("Enter path of CSV file: ")
-csv_loader = MyCSVLoader(file_path)
-csv_loader.extract_data()
-
-while True:  # Loop to continuously prompt for questions
-    query = input("Enter a question (or type 'exit' to quit): ")
-    if query.lower() == 'exit':
-        break  # Exit the loop if the user types 'exit'
-    answer = csv_loader.handle_user_input(query)
-    print("Answer:", answer)
+# file_path = input("Enter path of CSV file: ")
+# csv_loader = MyCSVLoader(file_path)
+# csv_loader.extract_data()
+#
+# while True:  # Loop to continuously prompt for questions
+#     query = input("Enter a question (or type 'exit' to quit): ")
+#     if query.lower() == 'exit':
+#         break  # Exit the loop if the user types 'exit'
+#     answer = csv_loader.handle_user_input(query)
+#     print("Answer:", answer)
