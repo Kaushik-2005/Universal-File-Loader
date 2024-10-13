@@ -3,7 +3,7 @@ import os
 from main import handle_query, update_knowledge_base
 
 app = Flask(__name__)
-current_file_type = None  # Store the file type globally to be used later
+current_file_type = None
 
 @app.route('/')
 def index():
@@ -16,7 +16,7 @@ def chat():
         return jsonify({'response': "No file uploaded. Please upload a file first."})
 
     user_input = request.json.get('message')
-    response = handle_query(user_input, current_file_type)  # Pass the file type to handle_query
+    response = handle_query(user_input, current_file_type)
     return jsonify({'response': response})
 
 @app.route('/upload', methods=['POST'])
@@ -29,17 +29,14 @@ def upload_file():
     file = request.files['file']
     file_type = file.filename.split('.')[-1].lower()
 
-    if file_type not in ['csv', 'pdf']:
+    if file_type not in ['csv', 'pdf', 'xlsx']:
         return jsonify({'error': 'Unsupported file type'}), 400
 
     file_path = os.path.join("uploads", file.filename)
     os.makedirs("uploads", exist_ok=True)
     file.save(file_path)
 
-    # Set the current file type based on uploaded file
     current_file_type = file_type
-
-    # Update the knowledge base accordingly
     update_knowledge_base(file_path, file_type)
 
     return jsonify({'response': f'{file_type.upper()} file processed and knowledge base updated successfully.'})
