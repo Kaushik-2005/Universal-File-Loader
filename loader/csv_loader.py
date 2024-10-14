@@ -38,7 +38,6 @@ class MyCSVLoader:
             """
         model = GoogleGenerativeAI(model="gemini-pro", temperature=0.3)
         prompt = PromptTemplate(template=prompt_template, input_variables=["csv_data", "question"])
-        # Use LLMChain directly instead of the deprecated load_qa_chain
         chain = LLMChain(llm=model, prompt=prompt)
         return chain
 
@@ -51,7 +50,7 @@ class MyCSVLoader:
         response = chain.run({
             "csv_data": str(self.csv_data),
             "question": user_question
-        })
+        }, return_only_outputs=True)
         return response
 
 # file_path = input("Enter path of CSV file: ")

@@ -36,7 +36,7 @@ class MyXLSXLoader:
                 Question:\n{question}\n
                 Answer:
         """
-        model = GoogleGenerativeAI(model="gemini-pro", temparature = 0.1)
+        model = GoogleGenerativeAI(model="gemini-pro", temperature=0.1)
         prompt = PromptTemplate(template=prompt_template, input_variables=["xlsx_data", "question"])
         chain = LLMChain(llm=model, prompt=prompt)
         return chain

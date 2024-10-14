@@ -13,7 +13,7 @@ class Chain:
         self.csv_loader = None
         self.xlsx_loader = None
         self.vector_store = None
-        self. csv_data = None
+        self.csv_data = None
         self.xlsx_data = None
 
     def update_knowledge_base_pdf(self, pdf_file_path):
@@ -52,10 +52,13 @@ class Chain:
             docs = self.vector_store.similarity_search(question)
             if not docs:
                 return "No relevant information found in the knowledge base."
-            response = self.pdf_loader.get_conversational_chain()(
-                {"input_documents": docs, "question": question}, return_only_outputs = True
-            )
-            return response["output_text"]
+            
+            # Create the context from the retrieved documents
+            context = "\n".join([doc.page_content for doc in docs])
+            
+            chain = self.pdf_loader.get_conversational_chain()
+            response = chain.invoke({"context": context, "question": question})
+            return response
 
         else:
             return "Unsupported file type. Please use 'pdf', 'csv', or 'xlsx'."

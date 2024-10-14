@@ -1,8 +1,7 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.prompts import PromptTemplate
-from langchain.chains.question_answering import load_qa_chain
+from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, GoogleGenerativeAI
 import google.generativeai as genai
 
@@ -36,15 +35,20 @@ class MyPDFLoader:
 
     def get_conversational_chain(self):
         prompt_template = """
-                Answer the question as detailed as possible from the provided context. Make sure to provide all the details.
-               If the answer is not in the provided context, just say, "The answer is not available in the context." Don't provide a wrong answer.\n\n
-               Context:\n{context}\n
-               Question:\n{question}\n
-               Answer:
-               """
+        Answer the question as detailed as possible from the provided context. Make sure to provide all the details.
+        If the answer is not in the provided context, just say, "The answer is not available in the context." Don't provide a wrong answer.
+
+        Context:
+        {context}
+
+        Question:
+        {question}
+
+        Answer:
+        """
         model = GoogleGenerativeAI(model="gemini-pro", temperature=0.3)
         prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
-        chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
+        chain = prompt | model
         return chain
 
     def handle_user_input(self, user_question):
@@ -56,5 +60,5 @@ class MyPDFLoader:
             return "No relevant documents found in the knowledge base."
 
         chain = self.get_conversational_chain()
-        response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
+        response = chain.run({"input_documents": docs, "question": user_question})
         return response["output_text"]
