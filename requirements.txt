@@ -14,3 +14,4 @@ langchain-groq
 faiss-cpu
 pandas
 openpyxl
+python-docx
