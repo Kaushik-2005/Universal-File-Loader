@@ -13,13 +13,11 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 class MyCSVLoader:
     def __init__(self, csv_file):
         self.csv_file = csv_file
-        self.csv_data = []
 
     def extract_data(self):
         loader = CSVLoader(self.csv_file)
         data = loader.load()
-        for i in data:
-            self.csv_data.append(i)
+        return [i.page_content for i in data]
 
     def get_conversational_chain(self):
         prompt_template = """

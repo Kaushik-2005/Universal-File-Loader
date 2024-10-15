@@ -25,15 +25,17 @@ class Chain:
 
     def update_knowledge_base_csv(self, csv_file_path):
         self.csv_loader = MyCSVLoader(csv_file_path)
+        self.csv_data = self.csv_loader.extract_data()
         print("CSV data loaded successfully, ready to answer queries")
 
     def update_knowledge_base_xlsx(self, xlsx_file_path):
         self.xlsx_loader = MyXLSXLoader(xlsx_file_path)
+        self.xlsx_data = self.xlsx_loader.extract_data()
         print("XLSX data loader successfully, ready to answer queries")
 
     def handle_query(self, question, file_type):
         if file_type == 'csv':
-            if self.csv_loader:
+            if self.csv_loader and self.csv_data:
                 chain = self.csv_loader.get_conversational_chain()
                 response = chain.invoke({"csv_data": str(self.csv_data), "question": question})
                 return response
@@ -41,12 +43,12 @@ class Chain:
                 return "No CSV data loaded. Please upload a CSV file"
 
         elif file_type == 'xlsx':
-            if self.xlsx_loader:
+            if self.xlsx_loader and self.xlsx_data:
                 chain = self.xlsx_loader.get_conversation_chain()
-                response = chain.invoke({"xlsx_data": str(self.xlsx_data), "question": question})
+                response = chain.invoke({"xlsx_data": self.xlsx_data, "question": question})
                 return response
             else:
-                return "NO XLSX data loaded. Please uploade a XLSX file"
+                return "No XLSX data loaded. Please upload an XLSX file"
 
         elif file_type == 'pdf':
             if not self.vector_store:
@@ -54,8 +56,6 @@ class Chain:
             docs = self.vector_store.similarity_search(question)
             if not docs:
                 return "No relevant information found in the knowledge base."
-            
-            # Create the context from the retrieved documents
             context = "\n".join([doc.page_content for doc in docs])
             
             chain = self.pdf_loader.get_conversational_chain()

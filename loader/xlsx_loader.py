@@ -13,13 +13,14 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 class MyXLSXLoader:
     def __init__(self, xlsx_file):
         self.xlsx_file = xlsx_file
-        self.xlsx_data = {}
 
     def extract_data(self):
         excel_data = pd.ExcelFile(self.xlsx_file)
+        all_data = {}
         for sheet_name in excel_data.sheet_names:
             df = pd.read_excel(self.xlsx_file, sheet_name=sheet_name)
-            self.xlsx_data[sheet_name] = df.to_dict(orient='records')
+            all_data[sheet_name] = df.to_dict(orient='records')
+        return str(all_data)
 
     def get_conversation_chain(self):
         prompt_template = """
