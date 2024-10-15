@@ -1,5 +1,4 @@
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from langchain_google_genai import GoogleGenerativeAI
 import google.generativeai as genai
 import pandas as pd
@@ -38,28 +37,5 @@ class MyXLSXLoader:
         """
         model = GoogleGenerativeAI(model="gemini-pro", temperature=0.1)
         prompt = PromptTemplate(template=prompt_template, input_variables=["xlsx_data", "question"])
-        chain = LLMChain(llm=model, prompt=prompt)
+        chain = prompt | model
         return chain
-
-    def handle_user_input(self, user_question):
-        if not self.xlsx_data:
-            self.extract_data()
-        chain = self.get_conversation_chain()
-
-        response = chain.run({
-            "xlsx_data": str(self.xlsx_data),
-            "question": user_question
-        })
-        return response
-
-
-# file_path = input("Enter the path of XLSX file: ")
-# xlsx_loader = MyXLSXLoader(file_path)
-# xlsx_loader.extract_data()
-#
-# while True:  # Loop to continuously prompt for questions
-#     query = input("Enter a question (or type 'exit' to quit): ")
-#     if query.lower() == 'exit':
-#         break  # Exit the loop if the user types 'exit'
-#     answer = xlsx_loader.handle_user_input(query)
-#     print("Answer:", answer)

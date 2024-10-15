@@ -1,6 +1,5 @@
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 import google.generativeai as genai
 from langchain_google_genai import GoogleGenerativeAI
 
@@ -38,28 +37,5 @@ class MyCSVLoader:
             """
         model = GoogleGenerativeAI(model="gemini-pro", temperature=0.3)
         prompt = PromptTemplate(template=prompt_template, input_variables=["csv_data", "question"])
-        chain = LLMChain(llm=model, prompt=prompt)
+        chain = prompt | model
         return chain
-
-    def handle_user_input(self, user_question):
-        if not self.csv_data:
-            self.extract_data()
-        chain = self.get_conversational_chain()
-
-        # Ensure the keys in the input match those expected by the prompt template
-        response = chain.run({
-            "csv_data": str(self.csv_data),
-            "question": user_question
-        }, return_only_outputs=True)
-        return response
-
-# file_path = input("Enter path of CSV file: ")
-# csv_loader = MyCSVLoader(file_path)
-# csv_loader.extract_data()
-#
-# while True:  # Loop to continuously prompt for questions
-#     query = input("Enter a question (or type 'exit' to quit): ")
-#     if query.lower() == 'exit':
-#         break  # Exit the loop if the user types 'exit'
-#     answer = csv_loader.handle_user_input(query)
-#     print("Answer:", answer)

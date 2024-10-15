@@ -34,14 +34,16 @@ class Chain:
     def handle_query(self, question, file_type):
         if file_type == 'csv':
             if self.csv_loader:
-                response = self.csv_loader.handle_user_input(question)
+                chain = self.csv_loader.get_conversational_chain()
+                response = chain.invoke({"csv_data": str(self.csv_data), "question": question})
                 return response
             else:
                 return "No CSV data loaded. Please upload a CSV file"
 
         elif file_type == 'xlsx':
             if self.xlsx_loader:
-                response = self.xlsx_loader.handle_user_input(question)
+                chain = self.xlsx_loader.get_conversation_chain()
+                response = chain.invoke({"xlsx_data": str(self.xlsx_data), "question": question})
                 return response
             else:
                 return "NO XLSX data loaded. Please uploade a XLSX file"
