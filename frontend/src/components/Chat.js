@@ -10,17 +10,17 @@ const Chat = () => {
         if (!message.trim()) return;
 
         try {
-            const res = await axios.post('http://localhost:5000/chat', {message});
+            const res = await axios.post('http://localhost:5000/chat', { message });
             setResponse(res.data.response);
         } catch (error) {
-            setResponse('Error: ${error.response?.data?.error || error.message}');
+            setResponse(`Error: ${error.response ? error.response.data.error : error.message}`);
         }
         setMessage('');
     };
 
     return (
         <div>
-            <Paper elevation={3} style={{padding: '20px', marginTop: '20px'}}>
+            <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                 <Typography variant="h6">Chat</Typography>
                 <TextField
                     fullWidth
@@ -33,8 +33,8 @@ const Chat = () => {
                     Send
                 </Button>
                 {response && (
-                    <Typography style={{marginTop: '20px'}}>
-                        <strong>Response: </strong> {response}
+                    <Typography style={{ marginTop: '20px' }}>
+                        <strong>Response:</strong> {response}
                     </Typography>
                 )}
             </Paper>
