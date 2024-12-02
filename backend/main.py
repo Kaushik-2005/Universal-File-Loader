@@ -123,21 +123,21 @@ def update_knowledge_base(file_path, file_type):
         print(f"Error updating knowledge base: {str(e)}")
         raise
 
-# if __name__ == "__main__":
-#     file_path = input("Enter the path to the file (PDF, CSV, XLSX, or DOCX): ")
-#     file_type = input("Enter the file type (pdf, csv, xlsx, or docx): ").lower()
-#     if os.path.exists(file_path):
-#         try:
-#             result = update_knowledge_base(file_path, file_type)
-#             print(result)
+if __name__ == "__main__":
+    file_path = input("Enter the path to the file (PDF, CSV, XLSX, or DOCX): ")
+    file_type = input("Enter the file type (pdf, csv, xlsx, or docx): ").lower()
+    if os.path.exists(file_path):
+        try:
+            result = update_knowledge_base(file_path, file_type)
+            print(result)
 
-#             while True:
-#                 question = input("Enter your question (or 'exit' to quit): ")
-#                 if question.lower() == "exit":
-#                     break
-#                 response = handle_query(question, file_type)
-#                 print("Response from LLM: ", response)
-#         except Exception as e:
-#             print(f"An error occurred: {str(e)}")
-#     else:
-#         print("File not found. Please check the file path and try again.")
+            while True:
+                question = input("Enter your question (or 'exit' to quit): ")
+                if question.lower() == "exit":
+                    break
+                response = handle_query(question, file_type)
+                print("Response from LLM: ", response)
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+    else:
+        print("File not found. Please check the file path and try again.")
