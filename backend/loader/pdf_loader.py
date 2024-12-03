@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-
 class PDFQueryAssistant:
     def __init__(self, pdf_file, allow_external_knowledge=True):
         """
@@ -41,7 +40,6 @@ class PDFQueryAssistant:
     def strip_markdown(self, text):
         """
         Remove Markdown formatting from text
-
         This method handles:
         - Bold (**text**)
         - Italics (*text*)
@@ -61,7 +59,6 @@ class PDFQueryAssistant:
     def get_response(self, user_question):
         """
         Generate response to user question
-
         :param user_question: User's input question
         :return: Model's response
         """
@@ -106,7 +103,7 @@ class PDFQueryAssistant:
         else:
             if self.allow_external_knowledge:
                 try:
-                    response = chain.invoke({"context": "No specific context available.", "question": user_question})
+                    response = chain.run({"context": "No specific context available.", "question": user_question})
                     raw_response = response.text if hasattr(response, 'text') else str(response)
                     clean_response = self.strip_markdown(raw_response)
                     return clean_response
