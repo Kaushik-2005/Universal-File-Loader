@@ -1,7 +1,9 @@
 import os
 from dotenv import load_dotenv
 
-from handle_file import PDFQueryAssistant, DOCXQueryAssistant, CSVQueryAssistant
+from loader.pdf_loader import PDFQueryAssistant
+from loader.csv_loader import CSVQueryAssistant
+from loader.docx_loader import DOCXQueryAssistant
 
 load_dotenv()
 
