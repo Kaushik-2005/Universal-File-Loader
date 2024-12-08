@@ -1,13 +1,36 @@
 import os
 import streamlit as st
 from main import handle_query, update_knowledge_base
+from db import FBDB
+
+# Initialize Firebase
+service_account_key_path = "cloud-computing-course-p-5950f-firebase-adminsdk-tmtqp-ae9452a336.json"
+firebase_db = FBDB(service_account_key_path)
+
+USER_ID = "streamlit_user"  # Unique user ID for the conversation
+
+def load_messages_from_firebase():
+    """
+    Load messages from Firebase for the current user.
+    """
+    messages = firebase_db.get(USER_ID)
+    if messages:
+        st.session_state.messages = messages
+    else:
+        st.session_state.messages = []
+
+def store_messages_to_firebase():
+    """
+    Store current messages to Firebase for the current user.
+    """
+    firebase_db.update(USER_ID, st.session_state.messages)
 
 def main():
     st.title("Chatbot")
 
     # Initialize session state if not already initialized
     if 'messages' not in st.session_state:
-        st.session_state.messages = []
+        load_messages_from_firebase()
     if 'file_type' not in st.session_state:
         st.session_state.file_type = None
     if 'temp_file_path' not in st.session_state:
@@ -63,6 +86,9 @@ def main():
         st.session_state.messages.append({"role": "assistant", "content": response})
         with st.chat_message("assistant"):
             st.write(response)
+
+        # Store the updated messages to Firebase
+        store_messages_to_firebase()
 
 if __name__ == "__main__":
     main()

@@ -19,3 +19,9 @@ python-docx
 reportlab
 fpdf
 docx
+firebase-admin
+azure-storage-blob
+azure-keyvault-secrets
+azure-mgmt-resource
+azure-ai-formrecognizer
+werkzeug

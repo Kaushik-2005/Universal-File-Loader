@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cloud-computing-course-p-5950f",
+  "private_key_id": "5437762128bb59a43a8f852fe74dc18fb6dd199d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDM5Moa/AkaIQ/u\njrGwfHDtgJFityygg4qT12lzexxf2Uo8PKebfvGPVHxF6lTh5aXiIu0o/Px+JNDq\nKyuaZ7/jkfLF/g5+t/jz5suyRiCUbOPL2Z+t96CwH5PPjHA21PAigOwzJLETDjLc\nQMZT6uzsR2r6ZZAvYl9iQpWuUDsh07uez0YPTeexBhahY/b781e5Mu8FmhA//O47\nlKmtSozDvW/LieD5QYReQzRDbkrL4Qs0wuXvZ8BUZVxvSoIWIDO86W3K3N/bXHb1\nuY5rXEoRkVxeKSpLzzusuxbPqyqqpLYmldomoLNJumVZNZf5m4PuIJInbz7/r9FH\nad8cdI/JAgMBAAECggEALGXTKX+9lSze3+mJtV1xtvUqC8L3Z5y5VYnS7tQZdOeH\nv3/BLd+XBmDfQOMjG4QAqvy4eS5ApDDkGCncm+upV+2TNrXzfB/vUSKMtwedHaxu\nvAhfInpLFn7xL4MV+buwgTmAdSCZQjDMco+SqjJ4vkZHdxS05p+hXZBiENCPz6dH\nZwDiq4smLSue9DfjWevodic9FS+UysgwqJO1AMBSOZxim2h0fI06/gAZHLq41EwF\n9m8MWxmHHk0J0QqGJ/Vhazz+ulPUijHh+WcNCNPBn5AAc6dCO8VrKYJKqKHXlILy\n+7bZS9Wy6FqO1VmyAo6hdffwBBiAVMR9lNg8F/mXpQKBgQDuGaBStNssvE2gINFa\no6bfx+ExJQVPfdF9Wi0iB3zrkXTgRnblAlHLGksFcbJWgB1D8HD6MTvmmX/uj949\nx7lnhnqUbFyBRR8IdSMa8DOmjwDEaSg8ps6DWOcVIkx97LLyFQUCh1kvoIUVk+aF\nb/S9T+AhaMdlgOkLKL9Bse3eewKBgQDcTBZHFJ1+wiQG9GX733Wwa3mYTTL+VPHt\nXEToY8hrmoo/KN2N7aO/n/WH6UxgL8WKU+Uh3/3p/lBhc2ZL3m1DNw51uolnQeJt\nxq0DTUi37cJwDTyr5l/nPBi42ZSt9h/sgk8dss11dG9kEhgMPeQRJgqKTmkuLkWD\nxlaFQZxZiwKBgHxLXGpQh2ofEtbYyvFqJR8FFQW2scMBh27MuGrfRdMjp8O8hSyf\nvVstaqR46gRF9QEWb6PsN7z1vNcou3e834ivpyX8O34wOzcLDzxs0EnOtTPTQXII\nEh53NorN0Oibu/6sAmWDiodWYKMXBmv6OeTp4bMPI6hVV1K//reozugpAoGALedM\n3RLWnoslpq1Wct1lUJWUiL/NWGGq56LKWQIxyPoyxGZnhCN4c32JVACxAXny15gT\nrrNV3WQ4q5W4Qybd7ZuTT8TGzNVVsTos4vs/o9PPKDoZ4lfms/A51orACF+41zdv\n9OhFF6xjaZ67lBFxbIFYwOkF0bGimorBjJLXWXECgYBmlofjAKlzz5BKnc0xMoc3\n6cFTYF/dFlPjA67WxU5ovfePkie8xZm55mA0uksUuBh1aRY0K8wyBuVkKlqtKwwP\nXaRwHB/qAAFJMpWVkzXbRpzJpk0kXzw1prtJ6AWPw6ajCUC9rZZLq13XflGhn/V2\nAc2Hq/RIrUYY/h4gEWAluw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-tmtqp@cloud-computing-course-p-5950f.iam.gserviceaccount.com",
+  "client_id": "107467895657638119871",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-tmtqp%40cloud-computing-course-p-5950f.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
