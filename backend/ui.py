@@ -4,7 +4,7 @@ from main import handle_query, update_knowledge_base
 from db import FBDB
 
 # Initialize Firebase
-service_account_key_path = "cloud-computing-course-p-5950f-firebase-adminsdk-tmtqp-ae9452a336.json"
+service_account_key_path = "service_account_key_path.json"
 firebase_db = FBDB(service_account_key_path)
 
 USER_ID = "streamlit_user"  # Unique user ID for the conversation

@@ -25,3 +25,7 @@ azure-keyvault-secrets
 azure-mgmt-resource
 azure-ai-formrecognizer
 werkzeug
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
