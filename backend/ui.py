@@ -15,15 +15,17 @@ def load_messages_from_firebase():
     """
     messages = firebase_db.get(USER_ID)
     if messages:
-        st.session_state.messages = messages
+        st.session_state.messages = messages['data']
+        st.session_state.conversation_name = messages.get('conversation_name', 'Untitled Conversation')
     else:
         st.session_state.messages = []
+        st.session_state.conversation_name = "Untitled Conversation"
 
 def store_messages_to_firebase():
     """
     Store current messages to Firebase for the current user.
     """
-    firebase_db.update(USER_ID, st.session_state.messages)
+    firebase_db.update(USER_ID, st.session_state.messages, st.session_state.conversation_name)
 
 def main():
     st.title("Chatbot")
@@ -70,6 +72,10 @@ def main():
     prompt = st.chat_input("Ask a query")
 
     if prompt:
+        # Set the conversation name to the first query if it's not set
+        if st.session_state.conversation_name == "Untitled Conversation":
+            st.session_state.conversation_name = prompt  # Set the name to the first user query
+
         # Process the query and return a response
         current_file_type = st.session_state.file_type
         try:
